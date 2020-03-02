@@ -1,4 +1,3 @@
-'use strict'
 // Install express server
 const express = require('express');
 const path = require('path');
@@ -6,7 +5,7 @@ const mysqlPool = require('./connection');
 
 // Initialize express app
 const app = express();
-const router = require("https://mi-linux.wlv.ac.uk/~1933527/");
+const router = express.Router();
 
 // Serve static pages
 app.use('./', router);
@@ -18,9 +17,9 @@ app.use('/mysql', router);
 // Specify public page entry point
 app.get('/mysql', function(req, res) {
     console.log("vsvdd")
-    mysqlPool.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+    mysqlPool.query('SELECT * FROM Building', function (error, results, fields) {
         if (error) return console.log(error);
-        console.log('The solution is: ', results[0].solution);
+        console.log('The solution is: ', results);
     });
 });
 
@@ -31,7 +30,7 @@ app.get('/api', async function(req, res) {
 });
 
 // Specify port
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 3000;
 
 // Start the app
 app.listen(port, () => {
