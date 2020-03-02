@@ -1,3 +1,4 @@
+'use strict'
 // Install express server
 const express = require('express');
 const path = require('path');
@@ -5,19 +6,23 @@ const mysqlconnection = require('./connection');
 
 // Initialize express app
 const app = express();
-const router = express.Router();
+const router = require("https://mi-linux.wlv.ac.uk/~1933527/");
 
 // Serve static pages
-app.use(express.static('./'));
+app.use('./', router);
 
 // Add API Routes 
 app.use('/api', router);
+app.use('/mysql', router);
 
 // Specify public page entry point
 app.get('/mysql', function(req, res) {
-    mysqlconnection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+    console.log(mysqlconnection.state);
+    mysqlconnection.query('SELECT * FROM Building', function (error, results, fields) {
         if (error) throw console.log(error);
-        console.log('The solution is: ', results[0].solution);
+        console.log('The solution is: ', results);
+        mysqlconnection.end();
+        res.send(results);
     });
 });
 
