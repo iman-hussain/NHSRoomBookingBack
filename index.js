@@ -1,3 +1,4 @@
+'use strict'
 // Install express server
 const express = require('express');
 const path = require('path');
@@ -5,13 +6,14 @@ const mysqlPool = require('./connection');
 
 // Initialize express app
 const app = express();
-const router = express.Router();
+const router = require("https://mi-linux.wlv.ac.uk/~1933527/");
 
 // Serve static pages
-app.use(express.static('./'));
+app.use('./', router);
 
 // Add API Routes 
 app.use('/api', router);
+app.use('/mysql', router);
 
 // Specify public page entry point
 app.get('/mysql', function(req, res) {
