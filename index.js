@@ -1,7 +1,7 @@
 // Install express server
 const express = require('express');
 const path = require('path');
-const mysqlPool = require('./connection');
+const oracledb = require('./connection');
 
 // Initialize express app
 const app = express();
@@ -16,11 +16,7 @@ app.use('/mysql', router);
 
 // Specify public page entry point
 app.get('/mysql', function(req, res) {
-    console.log("vsvdd")
-    mysqlPool.query('SELECT * FROM Building', function (error, results, fields) {
-        if (error) return console.log(error);
-        console.log('The solution is: ', results);
-    });
+    
 });
 
 // Serve backend routes (async)

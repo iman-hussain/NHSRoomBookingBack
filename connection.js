@@ -1,29 +1,32 @@
-const mysql = require('mysql')
+var oracledb = require('oracledb');
+let connection;
 
-var mysqlPool =  mysql.createPool({
-    host: 'mi-linux.wlv.ac.uk',
-    user: '1933527',
-    password: '707y1s',
-    database: 'db1933527',
-    debug : true,
-    connectionLimit: 10
-});
+async function run(){
+    try{
+        connection = await oracledb.getConnection( {
+            user          : "OPS$1415065",
+            password      : "P3nn1602",
+            connectString : "ora-srv.wlv.ac.uk:1521/catdb.wlv.ac.uk"
+        });
+    
+      const result = await connection.execute(
+          "SELECT * FROM SHIP_TB"
+      ); 
+      console.log(result.rows);
+    } catch (err) {
+        console.error(err);
+      } finally {
+        if (connection) {
+          try {
+            await connection.close();
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      }
+}
+  
+run();
 
-mysqlPool.getConnection((err, connection) => {
-    if (err) {
-        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-            console.error('Database connection was closed.')
-        }
-        if (err.code === 'ER_CON_COUNT_ERROR') {
-            console.error('Database has too many connections.')
-        }
-        if (err.code === 'ECONNREFUSED') {
-            console.error('Database connection was refused.')
-        }
-    }
-    if (connection) connection.release()
-    return
-})
-
-module.exports = mysqlPool;
+module.exports = oracledb;
 

@@ -19,6 +19,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "mysql": "github:mysqljs/mysql",
-    "mysqli": "^3.0.11"
+    "mysqli": "^3.0.11",
+    "oracledb": "^4.2.0"
   }
 }
