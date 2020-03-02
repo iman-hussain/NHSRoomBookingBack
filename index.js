@@ -1,7 +1,7 @@
 // Install express server
 const express = require('express');
 const path = require('path');
-const mysqlconnection = require('./connection');
+const mysqlPool = require('./connection');
 
 // Initialize express app
 const app = express();
@@ -15,8 +15,9 @@ app.use('/api', router);
 
 // Specify public page entry point
 app.get('/mysql', function(req, res) {
-    mysqlconnection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-        if (error) throw console.log(error);
+    console.log("vsvdd")
+    mysqlPool.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+        if (error) return console.log(error);
         console.log('The solution is: ', results[0].solution);
     });
 });
