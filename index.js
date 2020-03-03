@@ -7,6 +7,9 @@ const oracledb = require('oracledb');
 const app = express();
 const router = express.Router();
 
+const cors = require('cors');
+app.use(cors());
+
 app.use((req, res, next) => {
   oracledb.getConnection(
   {
@@ -44,7 +47,7 @@ app.get('/api', async function(req, res) {
 });
 
 // Specify port
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 // Start the app
 app.listen(port, () => {
