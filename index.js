@@ -40,6 +40,24 @@ app.get('/rooms', async function(req, res) {
   })
 });
 
+// Specify public page entry point
+app.get('/rooms2', async function(req, res) {
+  const sqlQuery = "INSERT INTO SHIP_TB VALUES (:1, :2, :3, :4)";
+  binds = [["New Ship", 455, 36000, 2500]];
+  req._oracledb.executeMany(sqlQuery, binds, {autoCommit: true}, function(err, rows){
+    req._oracledb.close();
+    if (!err)
+    {
+      res.send(rows);
+    }
+    else
+    {
+      console.log(err);
+      console.log('Error while performing Query.');
+    }
+  })
+});
+
 // Serve backend routes (async)
 app.get('/api', async function(req, res) {
   res.status(200).send('Hello World API')
