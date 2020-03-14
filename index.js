@@ -1,71 +1,59 @@
 // Install express server
 const express = require('express');
+const dotenv = require('dotenv');
 const path = require('path');
 const oracledb = require('oracledb');
 
+// Load environment variable
+dotenv.config({ path: './config/config.env'});
+
 // Initialize express app
 const app = express();
-const router = express.Router();
+
+// Body parser
+app.use(express.json());
 
 const cors = require('cors');
 app.use(cors());
 
+// Route files
+const buildings = require('./routes/buildings');
+const bookings = require('./routes/bookings');
+const caterings = require('./routes/catering');
+const reviews = require('./routes/reviews');
+const rooms = require('./routes/rooms');
+const toilets = require('./routes/toilets');
+const users = require('./routes/users');
+
+// Connect to the database.
 app.use((req, res, next) => {
   oracledb.getConnection(
-  {
-    user          : "OPS$1415065",
-    password      : "P3nn1602",
-    connectString : "ora-srv.wlv.ac.uk:1521/catdb.wlv.ac.uk"
-  },
-  (error, conn) => {
-    if (error) {console.log(err);}
-    else{
-      req._oracledb = conn;
-      next();
-    }
-})});
-
-// Specify public page entry point
-app.get('/rooms', async function(req, res) {
-  req._oracledb.execute("SELECT * FROM SHIP_TB", function(err, rows){
-    req._oracledb.close();
-    if (!err)
     {
-      res.send(rows)
-    }
-    else
-    {
-      console.log('Error while performing Query.');
-    }
-  })
+      user          : process.env.ORACLE_USER,
+      password      : process.env.ORACLE_PASSWORD,
+      connectString : process.env.ORACLE_STRING
+    },
+    (error, conn) => {
+      if (error) {console.log(err);}
+      else{
+        console.log("Connected");
+        req._oracledb = conn;
+        next();
+      }
+  });
 });
 
-// Specify public page entry point
-app.get('/rooms2', async function(req, res) {
-  const sqlQuery = "INSERT INTO SHIP_TB VALUES (:1, :2, :3, :4)";
-  binds = [["New Ship", 455, 36000, 2500]];
-  req._oracledb.executeMany(sqlQuery, binds, {autoCommit: true}, function(err, rows){
-    req._oracledb.close();
-    if (!err)
-    {
-      res.send(rows);
-    }
-    else
-    {
-      console.log(err);
-      console.log('Error while performing Query.');
-    }
-  })
-});
-
-// Serve backend routes (async)
-app.get('/api', async function(req, res) {
-  res.status(200).send('Hello World API')
-  const result = mySqlTest();
-});
+// Enable routes to be called. 
+app.use('/buildings', buildings);
+app.use('/bookings', bookings);
+app.use('/caterings', caterings);
+app.use('/reviews', reviews);
+app.use('/rooms', rooms);
+app.use('/toilets', toilets);
+app.use('/users', users); 
 
 // Specify port
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5000;
 
 // Start the app
 app.listen(port, () => {

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/iman-hussain/NHSRoomBookingBack#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mysql": "github:mysqljs/mysql",
     "mysqli": "^3.0.11",
