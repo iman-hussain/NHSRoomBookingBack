@@ -11,3 +11,41 @@ exports.getCaterings = async (req, res, next) => {
         }
       });
   };
+
+
+  function getCateringFromRec(req) {
+    const Catering = [{
+      CATERING_ID: req.body.CATERING_ID,
+      CATERING_NAME: req.body.CATERING_NAME,
+      CADDRESS: req.body.CADDRESS,
+      FULFILMENT: req.body.FULFILMENT,
+      HALAL: req.body.HALAL,
+      KOSHER: req.body.KOSHER,
+      VEGAN: req.body.VEGAN,
+      VEGETARIAN: req.body.VEGETARIAN,
+      GLUTEN: req.body.GLUTEN,
+      EXTERNAL: req.body.EXTERNAL,
+      VENDING_MACHINE: req.body.VENDING_MACHINE,
+      WATER_FOUNTAIN: req.body.WATER_FOUNTAIN,
+    }];
+  
+    return Catering;
+  }
+  
+  // @desc     Create a Catering
+  // @route    POST /Catering
+  // @access   Private
+  exports.postCatering = async (req, res, next) => {
+    try {
+      let Catering = getCateringFromRec(req);
+      
+      const createSql = 
+      "INSERT INTO CATERING_TB VALUES ( :CATERING_ID, :CATERING_NAME, :CADDRESS, :FULFILMENT, :HALAL, :KOSHER, :VEGAN, :VEGETARIAN, :GLUTEN, :EXTERNAL, :VENDING_MACHINE, :WATER_FOUNTAIN)";
+  
+      const result = await req._oracledb.executeMany(createSql, Catering, {autoCommit: true})
+      res.status(201).json(result);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };

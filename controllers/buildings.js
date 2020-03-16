@@ -49,8 +49,4 @@ exports.postBuilding = async (req, res, next) => {
     'insert into BUILDING_TB' (
       
     )
-
 };
-
-
-  
