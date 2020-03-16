@@ -34,7 +34,7 @@ app.use((req, res, next) => {
       connectString : process.env.ORACLE_STRING
     },
     (error, conn) => {
-      if (error) {console.log(err);}
+      if (error) {console.log(error);}
       else{
         console.log("Connected");
         req._oracledb = conn;
