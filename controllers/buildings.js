@@ -36,17 +36,14 @@ function getBuildingFromRec(req) {
 // @access   Private
 exports.postBuilding = async (req, res, next) => {
   try {
-    let building = getBuildingFromRec(req);
+    let Building = getBuildingFromRec(req);
 
-    building = await building.create(building);
-
-    res.status(201).json(building);
+    const createSql = 
+    "INSERT INTO BUILDING_TB VALUES ( :BUILDING_ID, :BUILDING_NAME, :BUILDING_ADDRESS, :B_LAT, :B_LONG, :CONTACT_NUMBER, :ROOMS, :FLOORS, :PARKING, :CATERING, :CATERING_ID)";
+    const result = await req._oracledb.executeMany(createSql, Building, {autoCommit: true})
+    res.status(201).json(result);
   } catch (error) {
+    console.log(error);
     next(error);
   }
-
-  const createSql = 
-    'insert into BUILDING_TB' (
-      
-    )
 };

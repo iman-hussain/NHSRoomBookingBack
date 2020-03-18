@@ -11,3 +11,36 @@ exports.getRooms = async (req, res, next) => {
         }
       });
   };
+
+  function getRoomFromRec(req) {
+    const room = {
+      ROOM_ID: req.body.ROOM_ID,
+      ROOM_NUMBER: req.body.ROOM_NUMBER,
+      FLOOR: req.body.FLOOR,
+      CAPACITY: req.body.CAPACITY,
+      FACILITIES: req.body.FACILITIES,
+      ACCESSIBILITY: req.body.ACCESSIBILITY,
+      BUILDING_ID: req.body.BUILDING_ID,
+      TOILET_ID: req.body.TOILET_ID,
+      CATERING_ID: req.body.CATERING_ID
+    };
+  
+    return room;
+  }
+  
+  // @desc     Create a room
+  // @route    POST /Room
+  // @access   Private
+  exports.postRoom = async (req, res, next) => {
+    try {
+      let Room = getRoomFromRec(req);
+  
+      const createSql = 
+      "INSERT INTO ROOM_TB VALUES ( :ROOM_ID, :ROOM_NUMBER, :FLOOR, :CAPACITY, :FACILITIES, :ACCESSIBLITY, :BUILDING_ID, :TOILET_ID, :CATERING_ID )";
+      const result = await req._oracledb.executeMany(createSql, Room, {autoCommit: true})
+      res.status(201).json(result);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
