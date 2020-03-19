@@ -28,6 +28,22 @@ exports.getCatering = async (req, res, next) => {
     });
 };
 
+// @desc     Delete a catering
+// @route    DELETE /caterings/:id
+// @access   Public
+exports.deleteCatering = async (req, res, next) => {
+  var CATERING_ID = req.params.id;
+
+  req._oracledb.execute("DELETE FROM CATERING_TB WHERE CATERING_ID = :CATERING_ID", [CATERING_ID], {autoCommit: true}, function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows});
+      } else {
+        console.log("Error while performing Query.");
+      }
+    });
+};
+
   function getCateringFromRec(req) {
     const Catering = [{
       CATERING_ID: req.body.CATERING_ID,

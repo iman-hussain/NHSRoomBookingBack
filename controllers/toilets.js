@@ -28,6 +28,22 @@ exports.getToilet = async (req, res, next) => {
     });
 };
 
+// @desc     Delete a toilet
+// @route    DELETE /toilets/:id
+// @access   Public
+exports.deleteToilet = async (req, res, next) => {
+  var TOILET_ID = req.params.id;
+
+  req._oracledb.execute("DELETE FROM TOILET_TB WHERE TOILET_ID = :TOILET_ID", [TOILET_ID], {autoCommit: true}, function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows});
+      } else {
+        console.log("Error while performing Query.");
+      }
+    });
+};
+
   function getToiletFromRec(req) {
     const toilet = {
       TOILET_ID: req.body.TOILET_ID,

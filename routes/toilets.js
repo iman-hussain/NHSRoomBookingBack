@@ -4,6 +4,7 @@ const express = require('express');
 const {
     getToilets,
     getToilet,
+    deleteToilet,
     postToilet
 } = require("../controllers/toilets");
 
@@ -18,6 +19,7 @@ router
 
 router  
     .route('/:id')
-    .get(getToilet);
+    .get(getToilet)
+    .delete(deleteToilet);
 
 module.exports = router;

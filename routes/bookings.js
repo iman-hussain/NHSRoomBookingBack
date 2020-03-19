@@ -4,6 +4,7 @@ const express = require('express');
 const {
     getBookings,
     getBooking,
+    deleteBooking,
     postBooking
 } = require("../controllers/bookings");
 
@@ -18,6 +19,7 @@ router
 
 router
     .route('/:id')
-    .get(getBooking);
+    .get(getBooking)
+    .delete(deleteBooking);
     
 module.exports = router;

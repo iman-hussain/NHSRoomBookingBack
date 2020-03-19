@@ -28,6 +28,22 @@ exports.getBuilding = async (req, res, next) => {
     });
 };
 
+// @desc     Delete a building
+// @route    DELETE /buildings/:id
+// @access   Public
+exports.deleteBuilding = async (req, res, next) => {
+  var BUILDING_ID = req.params.id;
+
+  req._oracledb.execute("DELETE FROM BUILDING_TB WHERE BUILDING_ID = :BUILDING_ID", [BUILDING_ID], {autoCommit: true}, function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows});
+      } else {
+        console.log("Error while performing Query.");
+      }
+    });
+};
+
 function getBuildingFromRec(req) {
   const building = {
     BUILDING_ID: req.body.BUILDING_ID,

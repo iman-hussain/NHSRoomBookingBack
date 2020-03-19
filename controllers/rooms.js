@@ -28,6 +28,22 @@ exports.getRoom = async (req, res, next) => {
     });
 };
 
+// @desc     Delete a rooms
+// @route    DELETE /rooms/:id
+// @access   Public
+exports.deleteRoom = async (req, res, next) => {
+  var ROOM_ID = req.params.id;
+
+  req._oracledb.execute("DELETE FROM ROOM_TB WHERE ROOM_ID = :ROOM_ID", [ROOM_ID], {autoCommit: true}, function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows});
+      } else {
+        console.log("Error while performing Query.");
+      }
+    });
+};
+
   function getRoomFromRec(req) {
     const room = {
       ROOM_ID: req.body.ROOM_ID,

@@ -28,6 +28,22 @@ exports.getReview = async (req, res, next) => {
     });
 };
 
+// @desc     Delete a review
+// @route    DELETE /reviews/:id
+// @access   Public
+exports.deleteReview = async (req, res, next) => {
+  var REVIEW_ID = req.params.id;
+
+  req._oracledb.execute("DELETE FROM REVIEW_TB WHERE REVIEW_ID = :REVIEW_ID", [REVIEW_ID], {autoCommit: true}, function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows});
+      } else {
+        console.log("Error while performing Query.");
+      }
+    });
+};
+
   function getReviewFromRec(req) {
     const review = {
       REVIEW_ID: req.body.REVIEW_ID,

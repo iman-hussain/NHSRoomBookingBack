@@ -4,6 +4,7 @@ const express = require('express');
 const {
     getCaterings,
     getCatering,
+    deleteCatering,
     postCatering
 } = require("../controllers/catering");
 
@@ -18,6 +19,7 @@ router
 
 router
     .route('/:id')
-    .get(getCatering);
+    .get(getCatering)
+    .delete(deleteCatering);
 
 module.exports = router;

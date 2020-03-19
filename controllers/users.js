@@ -28,6 +28,22 @@ exports.getUser = async (req, res, next) => {
     });
 };
 
+// @desc     Delete a user
+// @route    DELETE /users/:id
+// @access   Public
+exports.deleteUser = async (req, res, next) => {
+  var USER_ID = req.params.id;
+
+  req._oracledb.execute("DELETE FROM USERS_TB WHERE USER_ID = :USER_ID", [USER_ID], {autoCommit: true}, function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows});
+      } else {
+        console.log("Error while performing Query.");
+      }
+    });
+};
+
   function getUserFromRec(req) {
     const User = {
       USER_ID: req.body.USER_ID,

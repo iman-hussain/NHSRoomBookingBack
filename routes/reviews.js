@@ -4,6 +4,7 @@ const express = require('express');
 const {
     getReviews,
     getReview,
+    deleteReview,
     postReview
 } = require("../controllers/reviews");
 
@@ -18,6 +19,7 @@ router
 
 router
     .route('/:id')
-    .get(getReview);
+    .get(getReview)
+    .delete(deleteReview);
 
 module.exports = router;

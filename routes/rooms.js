@@ -4,6 +4,7 @@ const express = require('express');
 const {
     getRooms,
     getRoom,
+    deleteRoom,
     postRoom
 } = require("../controllers/rooms");
 
@@ -18,6 +19,7 @@ router
 
 router 
     .route('/:id')
-    .get(getRoom);
+    .get(getRoom)
+    .delete(deleteRoom);
 
 module.exports = router;

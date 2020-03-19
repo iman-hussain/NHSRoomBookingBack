@@ -4,6 +4,7 @@ const express = require('express');
 const {
     getUsers,
     postUser,
+    deleteUser,
     getUser
 } = require("../controllers/users");
 
@@ -18,6 +19,7 @@ router
 
 router
     .route('/:id')
-    .get(getUser);
+    .get(getUser)
+    .delete(deleteUser);
 
 module.exports = router;

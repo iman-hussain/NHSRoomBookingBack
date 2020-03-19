@@ -4,6 +4,7 @@ const express = require('express');
 const {
     getBuildings,
     getBuilding,
+    deleteBuilding,
     postBuilding
 } = require("../controllers/buildings");
 
@@ -18,6 +19,7 @@ router
 
 router
     .route('/:id')
-    .get(getBuilding);
+    .get(getBuilding)
+    .delete(deleteBuilding);
 
 module.exports = router;
