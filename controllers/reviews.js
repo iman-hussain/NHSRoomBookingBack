@@ -31,7 +31,7 @@ exports.getReviews = async (req, res, next) => {
   
       const createSql = 
       "INSERT INTO REVIEW_TB VALUES ( :REVIEW_ID, :RANKING, :REASON )";
-      const result = await req._oracledb.executeMany(createSql, Review, {autoCommit: true})
+      const result = await req._oracledb.execute(createSql, Review, {autoCommit: true})
       res.status(201).json(result);
     } catch (error) {
       console.log(error);

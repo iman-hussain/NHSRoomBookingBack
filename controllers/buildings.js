@@ -40,7 +40,7 @@ exports.postBuilding = async (req, res, next) => {
 
     const createSql = 
     "INSERT INTO BUILDING_TB VALUES ( :BUILDING_ID, :BUILDING_NAME, :BUILDING_ADDRESS, :B_LAT, :B_LONG, :CONTACT_NUMBER, :ROOMS, :FLOORS, :PARKING, :CATERING, :CATERING_ID)";
-    const result = await req._oracledb.executeMany(createSql, Building, {autoCommit: true})
+    const result = await req._oracledb.execute(createSql, Building, {autoCommit: true})
     res.status(201).json(result);
   } catch (error) {
     console.log(error);

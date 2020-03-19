@@ -29,11 +29,11 @@ exports.getToilets = async (req, res, next) => {
   // @access   Private
   exports.postToilet = async (req, res, next) => {
     try {
-      let Toilet = getRoomFromRec(req);
+      let Toilet = getToiletFromRec(req);
   
       const createSql = 
-      "INSERT INTO TOILET_TB VALUES ( :TOILET_ID, :GENDER, :DISABLITY_ASSESSIBLE, :BABY_CHANGING, :LAST_CLEANED)";
-      const result = await req._oracledb.executeMany(createSql, Toilet, {autoCommit: true})
+      "INSERT INTO TOILET_TB VALUES ( :TOILET_ID, :GENDERS, :DISABILITY_ASSESSIBLE, :BABY_CHANGING, :LAST_CLEANED)";
+      const result = await req._oracledb.execute(createSql, Toilet, {autoCommit: true})
       res.status(201).json(result);
     } catch (error) {
       console.log(error);

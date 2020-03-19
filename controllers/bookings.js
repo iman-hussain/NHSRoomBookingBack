@@ -13,15 +13,15 @@ exports.getBookings = async (req, res, next) => {
 };
 
 function getBookingFromRec(req) {
-  const booking = [{
+  const booking = {
     BOOKING_ID: req.body.BOOKING_ID,
     BOOKING_DATE: req.body.BOOKING_DATE,
     BOOKING_TIME: req.body.BOOKING_TIME,
     GUESTS: req.body.GUESTS,
     USER_ID: req.body.USER_ID,
     ROOM_ID: req.body.ROOM_ID,
-    REVIEW_ID: req.body.REVIEW_ID
-  }];
+    REVIEW_ID: null
+  };
 
   return booking;
 }
@@ -32,11 +32,11 @@ function getBookingFromRec(req) {
 exports.postBooking = async (req, res, next) => {
   try {
     let booking = getBookingFromRec(req);
-    
+
     const createSql = 
     "INSERT INTO BOOKINGS_TB VALUES ( :BOOKING_ID, :BOOKING_DATE, :BOOKING_TIME, :GUESTS, :USER_ID, :ROOM_ID, :REVIEW_ID)";
 
-    const result = await req._oracledb.executeMany(createSql, booking)
+    const result = await req._oracledb.execute(createSql, booking, {autoCommit: true})
     res.status(201).json(result);
   } catch (error) {
     console.log(error);

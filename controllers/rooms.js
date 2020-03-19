@@ -36,8 +36,8 @@ exports.getRooms = async (req, res, next) => {
       let Room = getRoomFromRec(req);
   
       const createSql = 
-      "INSERT INTO ROOM_TB VALUES ( :ROOM_ID, :ROOM_NUMBER, :FLOOR, :CAPACITY, :FACILITIES, :ACCESSIBLITY, :BUILDING_ID, :TOILET_ID, :CATERING_ID )";
-      const result = await req._oracledb.executeMany(createSql, Room, {autoCommit: true})
+      "INSERT INTO ROOM_TB VALUES ( :ROOM_ID, :ROOM_NUMBER, :FLOOR, :CAPACITY, :FACILITIES, :ACCESSIBILITY, :BUILDING_ID, :TOILET_ID, :CATERING_ID )";
+      const result = await req._oracledb.execute(createSql, Room, {autoCommit: true})
       res.status(201).json(result);
     } catch (error) {
       console.log(error);
