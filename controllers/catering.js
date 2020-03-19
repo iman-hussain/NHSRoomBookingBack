@@ -12,6 +12,21 @@ exports.getCaterings = async (req, res, next) => {
       });
   };
 
+// @desc     Get a catering
+// @route    GET /caterings/:id
+// @access   Public
+exports.getCatering = async (req, res, next) => {
+  var CATERING_ID = req.params.id;
+
+  req._oracledb.execute("SELECT * FROM CATERING_TB WHERE CATERING_ID = :CATERING_ID", [CATERING_ID], function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows});
+      } else {
+        console.log("Error while performing Query.");
+      }
+    });
+};
 
   function getCateringFromRec(req) {
     const Catering = [{

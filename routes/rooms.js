@@ -3,6 +3,7 @@ const express = require('express');
 // The methods we want from the rooms controller
 const {
     getRooms,
+    getRoom,
     postRoom
 } = require("../controllers/rooms");
 
@@ -14,5 +15,9 @@ router
     .route('/')
     .get(getRooms)
     .post(postRoom);
+
+router 
+    .route('/:id')
+    .get(getRoom);
 
 module.exports = router;

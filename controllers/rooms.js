@@ -12,6 +12,22 @@ exports.getRooms = async (req, res, next) => {
       });
   };
 
+// @desc     Get a rooms
+// @route    GET /rooms/:id
+// @access   Public
+exports.getRoom = async (req, res, next) => {
+  var ROOM_ID = req.params.id;
+
+  req._oracledb.execute("SELECT * FROM ROOM_TB WHERE ROOM_ID = :ROOM_ID", [ROOM_ID], function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows});
+      } else {
+        console.log("Error while performing Query.");
+      }
+    });
+};
+
   function getRoomFromRec(req) {
     const room = {
       ROOM_ID: req.body.ROOM_ID,

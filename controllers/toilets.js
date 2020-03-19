@@ -12,6 +12,22 @@ exports.getToilets = async (req, res, next) => {
       });
   };
 
+// @desc     Get a toilet
+// @route    GET /toilets/:id
+// @access   Public
+exports.getToilet = async (req, res, next) => {
+  var TOILET_ID = req.params.id;
+
+  req._oracledb.execute("SELECT * FROM TOILET_TB WHERE TOILET_ID = :TOILET_ID", [TOILET_ID], function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows});
+      } else {
+        console.log("Error while performing Query.");
+      }
+    });
+};
+
   function getToiletFromRec(req) {
     const toilet = {
       TOILET_ID: req.body.TOILET_ID,

@@ -3,7 +3,8 @@ const express = require('express');
 // The methods we want from the users controller
 const {
     getUsers,
-    postUser
+    postUser,
+    getUser
 } = require("../controllers/users");
 
 
@@ -14,5 +15,9 @@ router
     .route('/')
     .get(getUsers)
     .post(postUser);
+
+router
+    .route('/:id')
+    .get(getUser);
 
 module.exports = router;

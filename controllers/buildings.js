@@ -1,4 +1,3 @@
-const oracledb = require('oracledb');
 // @desc     Get all buildinga
 // @route    GET /buildings
 // @access   Public
@@ -11,6 +10,22 @@ exports.getBuildings = async (req, res, next) => {
           console.log("Error while performing Query.");
         }
       });
+};
+
+// @desc     Get a building
+// @route    GET /buildings/:id
+// @access   Public
+exports.getBuilding = async (req, res, next) => {
+  var BUILDING_ID = req.params.id;
+
+  req._oracledb.execute("SELECT * FROM BUILDING_TB WHERE BUILDING_ID = :BUILDING_ID", [BUILDING_ID], function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows});
+      } else {
+        console.log("Error while performing Query.");
+      }
+    });
 };
 
 function getBuildingFromRec(req) {

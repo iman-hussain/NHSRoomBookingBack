@@ -3,6 +3,7 @@ const express = require('express');
 // The methods we want from the buildings controller
 const {
     getBuildings,
+    getBuilding,
     postBuilding
 } = require("../controllers/buildings");
 
@@ -14,5 +15,9 @@ router
     .route('/')
     .get(getBuildings)
     .post(postBuilding);
+
+router
+    .route('/:id')
+    .get(getBuilding);
 
 module.exports = router;

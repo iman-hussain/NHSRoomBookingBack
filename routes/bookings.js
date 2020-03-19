@@ -3,6 +3,7 @@ const express = require('express');
 // The methods we want from the bookings controller
 const {
     getBookings,
+    getBooking,
     postBooking
 } = require("../controllers/bookings");
 
@@ -15,4 +16,8 @@ router
     .get(getBookings)
     .post(postBooking);
 
+router
+    .route('/:id')
+    .get(getBooking);
+    
 module.exports = router;

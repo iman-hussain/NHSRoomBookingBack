@@ -1,5 +1,5 @@
 // @desc     Get all reviews
-// @route    GET /reviewss
+// @route    GET /reviews
 // @access   Public
 exports.getReviews = async (req, res, next) => {
     req._oracledb.execute("SELECT * FROM REVIEWS_TB", function(err, rows) {
@@ -11,6 +11,22 @@ exports.getReviews = async (req, res, next) => {
         }
       });
   };
+
+// @desc     Get a review
+// @route    GET /reviews/:id
+// @access   Public
+exports.getReview = async (req, res, next) => {
+  var REVIEW_ID = req.params.id;
+
+  req._oracledb.execute("SELECT * FROM REVIEW_TB WHERE REVIEW_ID = :REVIEW_ID", [REVIEW_ID], function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows});
+      } else {
+        console.log("Error while performing Query.");
+      }
+    });
+};
 
   function getReviewFromRec(req) {
     const review = {

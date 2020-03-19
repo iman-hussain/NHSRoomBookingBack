@@ -3,6 +3,7 @@ const express = require('express');
 // The methods we want from the toilets controller
 const {
     getToilets,
+    getToilet,
     postToilet
 } = require("../controllers/toilets");
 
@@ -14,5 +15,9 @@ router
     .route('/')
     .get(getToilets)
     .post(postToilet);
+
+router  
+    .route('/:id')
+    .get(getToilet);
 
 module.exports = router;
