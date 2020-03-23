@@ -2,14 +2,14 @@
 // @route    GET /buildings
 // @access   Public
 exports.getBuildings = async (req, res, next) => {
-    req._oracledb.execute("SELECT * FROM BUILDING_TB", function(err, rows) {
-        req._oracledb.close();
-        if (!err) {
-          res.status(200).json({ success: true, rows});
-        } else {
-          console.log("Error while performing Query.");
-        }
-      });
+  req._oracledb.execute("SELECT * FROM BUILDING_TB", function(err, rows) {
+    req._oracledb.close();
+    if (!err) {
+      res.status(200).json({ success: true, rows });
+    } else {
+      console.log("Error while performing Query.");
+    }
+  });
 };
 
 // @desc     Get a building
@@ -18,14 +18,18 @@ exports.getBuildings = async (req, res, next) => {
 exports.getBuilding = async (req, res, next) => {
   var BUILDING_ID = req.params.id;
 
-  req._oracledb.execute("SELECT * FROM BUILDING_TB WHERE BUILDING_ID = :BUILDING_ID", [BUILDING_ID], function(err, rows) {
+  req._oracledb.execute(
+    "SELECT * FROM BUILDING_TB WHERE BUILDING_ID = :BUILDING_ID",
+    [BUILDING_ID],
+    function(err, rows) {
       req._oracledb.close();
       if (!err) {
-        res.status(200).json({ success: true, rows});
+        res.status(200).json({ success: true, rows });
       } else {
         console.log("Error while performing Query.");
       }
-    });
+    }
+  );
 };
 
 // @desc     Delete a building
@@ -34,14 +38,19 @@ exports.getBuilding = async (req, res, next) => {
 exports.deleteBuilding = async (req, res, next) => {
   var BUILDING_ID = req.params.id;
 
-  req._oracledb.execute("DELETE FROM BUILDING_TB WHERE BUILDING_ID = :BUILDING_ID", [BUILDING_ID], {autoCommit: true}, function(err, rows) {
+  req._oracledb.execute(
+    "DELETE FROM BUILDING_TB WHERE BUILDING_ID = :BUILDING_ID",
+    [BUILDING_ID],
+    { autoCommit: true },
+    function(err, rows) {
       req._oracledb.close();
       if (!err) {
-        res.status(200).json({ success: true, rows});
+        res.status(200).json({ success: true, rows });
       } else {
         console.log("Error while performing Query.");
       }
-    });
+    }
+  );
 };
 
 function getBuildingFromRec(req) {
@@ -69,9 +78,11 @@ exports.postBuilding = async (req, res, next) => {
   try {
     let Building = getBuildingFromRec(req);
 
-    const createSql = 
-    "INSERT INTO BUILDING_TB VALUES ( :BUILDING_ID, :BUILDING_NAME, :BUILDING_ADDRESS, :B_LAT, :B_LONG, :CONTACT_NUMBER, :ROOMS, :FLOORS, :PARKING, :CATERING, :CATERING_ID)";
-    const result = await req._oracledb.execute(createSql, Building, {autoCommit: true})
+    const createSql =
+      "INSERT INTO BUILDING_TB VALUES ( :BUILDING_ID, :BUILDING_NAME, :BUILDING_ADDRESS, :B_LAT, :B_LONG, :CONTACT_NUMBER, :ROOMS, :FLOORS, :PARKING, :CATERING, :CATERING_ID)";
+    const result = await req._oracledb.execute(createSql, Building, {
+      autoCommit: true
+    });
     res.status(201).json(result);
   } catch (error) {
     console.log(error);
