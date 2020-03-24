@@ -5,7 +5,8 @@ const {
     getRooms,
     getRoom,
     deleteRoom,
-    postRoom
+    postRoom,
+    putRoom
 } = require("../controllers/rooms");
 
 
@@ -15,7 +16,8 @@ const router = express.Router();
 router
     .route('/')
     .get(getRooms)
-    .post(postRoom);
+    .post(postRoom)
+    .put(putRoom);
 
 router 
     .route('/:id')

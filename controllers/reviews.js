@@ -70,9 +70,34 @@ exports.postReview = async (req, res, next) => {
   try {
     let Review = getReviewFromRec(req);
 
-    const createSql =
-      "INSERT INTO REVIEW_TB VALUES ( :REVIEW_ID, :RANKING, :REASON )";
+    const createSql = `INSERT INTO REVIEW_TB VALUES ( 
+        :REVIEW_ID, 
+        :RANKING, 
+        :REASON )`;
+
     const result = await req._oracledb.execute(createSql, Review, {
+      autoCommit: true
+    });
+    res.status(201).json(result);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+// @desc     Update a review
+// @route    PUT /review
+// @access   Private
+exports.putReview = async (req, res, next) => {
+  try {
+    let review = getReviewFromRec(req);
+
+    const updateSql = `UPDATE REVIEW_TB 
+     SET RANKING = :RANKING, 
+     REASON = :REASON
+     WHERE REVIEW_ID = :REVIEW_ID`;
+
+    const result = await req._oracledb.execute(updateSql, review, {
       autoCommit: true
     });
     res.status(201).json(result);

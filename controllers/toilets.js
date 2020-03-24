@@ -72,9 +72,38 @@ exports.postToilet = async (req, res, next) => {
   try {
     let Toilet = getToiletFromRec(req);
 
-    const createSql =
-      "INSERT INTO TOILET_TB VALUES ( :TOILET_ID, :GENDERS, :DISABILITY_ASSESSIBLE, :BABY_CHANGING, :LAST_CLEANED)";
+    const createSql = `INSERT INTO TOILET_TB VALUES ( 
+        :TOILET_ID, 
+        :GENDERS, 
+        :DISABILITY_ASSESSIBLE, 
+        :BABY_CHANGING, 
+        :LAST_CLEANED)`;
+
     const result = await req._oracledb.execute(createSql, Toilet, {
+      autoCommit: true
+    });
+    res.status(201).json(result);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+// @desc     Update a toilet
+// @route    PUT /Toilet
+// @access   Private
+exports.putToilet = async (req, res, next) => {
+  try {
+    let Toilet = getToiletFromRec(req);
+
+    const updateSql = `UPDATE TOILET_TB 
+      SET GENDERS = :GENDERS,
+      DISABILITY_ASSESSIBLE = :DISABILITY_ASSESSIBLE, 
+      BABY_CHANGING = :BABY_CHANGING, 
+      LAST_CLEANED = :LAST_CLEANED
+      WHERE TOILET_ID = :TOILET_ID`;
+
+    const result = await req._oracledb.execute(updateSql, Toilet, {
       autoCommit: true
     });
     res.status(201).json(result);

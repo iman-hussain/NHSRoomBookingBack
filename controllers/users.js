@@ -76,9 +76,47 @@ exports.postUser = async (req, res, next) => {
   try {
     let User = getUserFromRec(req);
 
-    const createSql =
-      "INSERT INTO USERS_TB VALUES ( :USER_ID, :USER_TYPE, :USERNAME, :FIRST_NAME, :SURNAME, :EMAIL, :ADDRESS, :PHONE_NUMBER, :EXPENSE_CODE)";
+    const createSql = `INSERT INTO USERS_TB VALUES ( 
+      :USER_ID, 
+      :USER_TYPE, 
+      :USERNAME, 
+      :FIRST_NAME, 
+      :SURNAME, 
+      :EMAIL, 
+      :ADDRESS, 
+      :PHONE_NUMBER, 
+      :EXPENSE_CODE)`;
+
     const result = await req._oracledb.execute(createSql, User, {
+      autoCommit: true
+    });
+    res.status(201).json(result);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+// @desc     Update a user
+// @route    PUT /user
+// @access   Private
+exports.putUser = async (req, res, next) => {
+  try {
+    let user = getUserFromRec(req);
+
+    const updateSql = `UPDATE USER_TB 
+      SET USER_TYPE = :USER_TYPE,
+      USER_TYPE = :USER_TYPE,
+      USERNAME = :USERNAME,
+      FIRST_NAME = :FIRST_NAME,
+      SURNAME = :SURNAME,
+      EMAIL = :EMAIL,
+      ADDRESS = :ADDRESS,
+      PHONE_NUMBER = :PHONE_NUMBER,
+      EXPENSE_CODE = :EXPENSE_CODE
+      WHERE USER_ID = :USER_ID`;
+
+    const result = await req._oracledb.execute(updateSql, user, {
       autoCommit: true
     });
     res.status(201).json(result);

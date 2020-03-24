@@ -81,10 +81,52 @@ exports.postCatering = async (req, res, next) => {
   try {
     let Catering = getCateringFromRec(req);
 
-    const createSql =
-      "INSERT INTO CATERING_TB VALUES ( :CATERING_ID, :CATERING_NAME, :CADDRESS, :FULFILMENT, :HALAL, :KOSHER, :VEGAN, :VEGETARIAN, :GLUTEN, :EXTERNAL, :VENDING_MACHINE, :WATER_FOUNTAIN)";
+    const createSql = `INSERT INTO CATERING_TB VALUES ( 
+        :CATERING_ID, 
+        :CATERING_NAME, 
+        :CADDRESS, 
+        :FULFILMENT, 
+        :HALAL, 
+        :KOSHER, 
+        :VEGAN, 
+        :VEGETARIAN, 
+        :GLUTEN, 
+        :EXTERNAL, 
+        :VENDING_MACHINE, 
+        :WATER_FOUNTAIN)`;
 
     const result = await req._oracledb.executeMany(createSql, Catering, {
+      autoCommit: true
+    });
+    res.status(201).json(result);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+// @desc     Update a catering
+// @route    PUT /catering
+// @access   Private
+exports.putCatering = async (req, res, next) => {
+  try {
+    let catering = getCateringFromRec(req);
+
+    const updateSql = `UPDATE CATERING_TB
+      SET CATERING_NAME = :CATERING_NAME, 
+      CADDRESS = :CADDRESS, 
+      FULFILMENT = :FULFILMENT, 
+      HALAL = :HALAL, 
+      KOSHER = :KOSHER,
+      VEGAN = :VEGAN, 
+      VEGETARIAN = :VEGETARIAN, 
+      GLUTEN = :GLUTEN, 
+      EXTERNAL = :EXTERNAL, 
+      VENDING_MACHINE = :VENDING_MACHINE, 
+      WATER_FOUNTAIN = :WATER_FOUNTAIN
+      WHERE CATERING_ID = :CATERING_ID`;
+
+    const result = await req._oracledb.execute(updateSql, catering, {
       autoCommit: true
     });
     res.status(201).json(result);

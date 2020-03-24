@@ -78,9 +78,51 @@ exports.postBuilding = async (req, res, next) => {
   try {
     let Building = getBuildingFromRec(req);
 
-    const createSql =
-      "INSERT INTO BUILDING_TB VALUES ( :BUILDING_ID, :BUILDING_NAME, :BUILDING_ADDRESS, :B_LAT, :B_LONG, :CONTACT_NUMBER, :ROOMS, :FLOORS, :PARKING, :CATERING, :CATERING_ID)";
+    const createSql = `INSERT INTO BUILDING_TB VALUES ( 
+        :BUILDING_ID, 
+        :BUILDING_NAME, 
+        :BUILDING_ADDRESS, 
+        :B_LAT, 
+        :B_LONG, 
+        :CONTACT_NUMBER, 
+        :ROOMS, 
+        :FLOORS, 
+        :PARKING, 
+        :CATERING, 
+        :CATERING_ID)`;
+
     const result = await req._oracledb.execute(createSql, Building, {
+      autoCommit: true
+    });
+    res.status(201).json(result);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+// @desc     Update a building
+// @route    PUT /building
+// @access   Private
+exports.putBuilding = async (req, res, next) => {
+  try {
+    let building = getBuildingFromRec(req);
+
+    /*Notes for database, create trigger to increment rooms value when adding a room to rooms table with building_id foreign key*/
+    const updateSql = `UPDATE BUILDING_TB
+      SET BUILDING_NAME = :BUILDING_NAME, 
+      BUILDING_ADDRESS = :BUILDING_ADDRESS, 
+      B_LAT = :B_LAT, 
+      B_LONG = :B_LONG, 
+      CONTACT_NUMBER = :CONTACT_NUMBER, 
+      ROOMS = :ROOMS, 
+      FLOORS = :FLOORS, 
+      PARKING = :PARKING, 
+      CATERING = :CATERING, 
+      CATERING_ID = :CATERING_ID
+      WHERE BUILDING_ID = :BUILDING_ID`;
+
+    const result = await req._oracledb.execute(updateSql, building, {
       autoCommit: true
     });
     res.status(201).json(result);

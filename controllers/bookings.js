@@ -74,10 +74,42 @@ exports.postBooking = async (req, res, next) => {
   try {
     let booking = getBookingFromRec(req);
 
-    const createSql =
-      "INSERT INTO BOOKINGS_TB VALUES ( :BOOKING_ID, :BOOKING_DATE, :BOOKING_TIME, :GUESTS, :USER_ID, :ROOM_ID, :REVIEW_ID)";
+    const createSql = `INSERT INTO BOOKINGS_TB VALUES ( 
+        :BOOKING_ID, 
+        :BOOKING_DATE, 
+        :BOOKING_TIME,
+        :GUESTS, 
+        :USER_ID, 
+        :ROOM_ID, 
+        :REVIEW_ID)`;
 
     const result = await req._oracledb.execute(createSql, booking, {
+      autoCommit: true
+    });
+    res.status(201).json(result);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+// @desc     Update a booking
+// @route    PUT /booking
+// @access   Private
+exports.putBooking = async (req, res, next) => {
+  try {
+    let booking = getBookingFromRec(req);
+
+    const updateSql = `UPDATE BOOKINGS_TB
+      SET BOOKING_DATE = :BOOKING_DATE, 
+      BOOKING_TIME = :BOOKING_TIME, 
+      GUESTS = :GUESTS, 
+      USER_ID = :USER_ID, 
+      ROOM_ID = :ROOM_ID, 
+      REVIEW_ID = :REVIEW_ID
+      WHERE BOOKING_ID = :BOOKING_ID`;
+
+    const result = await req._oracledb.execute(updateSql, booking, {
       autoCommit: true
     });
     res.status(201).json(result);

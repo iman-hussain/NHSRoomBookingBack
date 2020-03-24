@@ -5,7 +5,8 @@ const {
     getUsers,
     postUser,
     deleteUser,
-    getUser
+    getUser,
+    putUser
 } = require("../controllers/users");
 
 
@@ -15,7 +16,8 @@ const router = express.Router();
 router
     .route('/')
     .get(getUsers)
-    .post(postUser);
+    .post(postUser)
+    .put(putUser);
 
 router
     .route('/:id')

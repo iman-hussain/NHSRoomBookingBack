@@ -76,9 +76,46 @@ exports.postRoom = async (req, res, next) => {
   try {
     let Room = getRoomFromRec(req);
 
-    const createSql =
-      "INSERT INTO ROOM_TB VALUES ( :ROOM_ID, :ROOM_NUMBER, :FLOOR, :CAPACITY, :FACILITIES, :ACCESSIBILITY, :BUILDING_ID, :TOILET_ID, :CATERING_ID )";
+    const createSql = `INSERT INTO ROOM_TB VALUES ( 
+        :ROOM_ID, 
+        :ROOM_NUMBER, 
+        :FLOOR, 
+        :CAPACITY, 
+        :FACILITIES, 
+        :ACCESSIBILITY, 
+        :BUILDING_ID, 
+        :TOILET_ID, 
+        :CATERING_ID )`;
+
     const result = await req._oracledb.execute(createSql, Room, {
+      autoCommit: true
+    });
+    res.status(201).json(result);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+// @desc     Update a room
+// @route    PUT /room
+// @access   Private
+exports.putRoom = async (req, res, next) => {
+  try {
+    let room = getRoomFromRec(req);
+
+    const updateSql = `UPDATE ROOM_TB
+     SET ROOM_NUMBER = :ROOM_NUMBER, 
+     FLOOR = :FLOOR,
+     CAPACITY = :CAPACITY,
+     FACILITIES = :FACILITIES,
+     ACCESSIBILITY = :ACCESSIBILITY, 
+     BUILDING_ID = :BUILDING_ID, 
+     TOILET_ID = :TOILET_ID,
+     CATERING_ID = :CATERING_ID
+     WHERE ROOM_ID = :ROOM_ID`;
+
+    const result = await req._oracledb.execute(updateSql, room, {
       autoCommit: true
     });
     res.status(201).json(result);

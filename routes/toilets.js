@@ -5,7 +5,8 @@ const {
     getToilets,
     getToilet,
     deleteToilet,
-    postToilet
+    postToilet,
+    putToilet
 } = require("../controllers/toilets");
 
 
@@ -15,7 +16,8 @@ const router = express.Router();
 router
     .route('/')
     .get(getToilets)
-    .post(postToilet);
+    .post(postToilet)
+    .put(putToilet);
 
 router  
     .route('/:id')

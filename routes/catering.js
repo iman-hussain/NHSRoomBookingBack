@@ -5,7 +5,8 @@ const {
     getCaterings,
     getCatering,
     deleteCatering,
-    postCatering
+    postCatering,
+    putCatering
 } = require("../controllers/catering");
 
 
@@ -15,7 +16,8 @@ const router = express.Router();
 router
     .route('/')
     .get(getCaterings)
-    .post(postCatering);
+    .post(postCatering)
+    .put(putCatering);
 
 router
     .route('/:id')

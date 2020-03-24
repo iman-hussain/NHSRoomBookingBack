@@ -5,7 +5,8 @@ const {
     getReviews,
     getReview,
     deleteReview,
-    postReview
+    postReview,
+    putReview
 } = require("../controllers/reviews");
 
 
@@ -15,7 +16,8 @@ const router = express.Router();
 router
     .route('/')
     .get(getReviews)
-    .post(postReview);
+    .post(postReview)
+    .put(putReview);
 
 router
     .route('/:id')

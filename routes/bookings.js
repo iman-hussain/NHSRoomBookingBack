@@ -5,7 +5,8 @@ const {
     getBookings,
     getBooking,
     deleteBooking,
-    postBooking
+    postBooking,
+    putBooking
 } = require("../controllers/bookings");
 
 
@@ -15,7 +16,8 @@ const router = express.Router();
 router
     .route('/')
     .get(getBookings)
-    .post(postBooking);
+    .post(postBooking)
+    .put(putBooking);
 
 router
     .route('/:id')

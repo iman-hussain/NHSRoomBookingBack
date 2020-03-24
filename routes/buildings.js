@@ -5,7 +5,8 @@ const {
     getBuildings,
     getBuilding,
     deleteBuilding,
-    postBuilding
+    postBuilding,
+    putBuilding
 } = require("../controllers/buildings");
 
 
@@ -15,7 +16,8 @@ const router = express.Router();
 router
     .route('/')
     .get(getBuildings)
-    .post(postBuilding);
+    .post(postBuilding)
+    .put(putBuilding);
 
 router
     .route('/:id')
