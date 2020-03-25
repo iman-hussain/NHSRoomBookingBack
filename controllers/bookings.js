@@ -32,6 +32,27 @@ exports.getBooking = async (req, res, next) => {
   );
 };
 
+// @desc     Get all bookings matching user ID
+// @route    GET /bookings/user/:id
+// @access   Public
+exports.getUserBookings = async (req, res, next) => {
+  var USER_ID = req.params.id;
+
+  req._oracledb.execute(
+    "SELECT * FROM BOOKINGS_TB WHERE USER_ID = :USER_ID",
+    [USER_ID],
+    function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows });
+      } else {
+        console.log("Error while performing Query.");
+      }
+    }
+  );
+};
+
+
 // @desc     Get a booking
 // @route    DELETE /bookings/:id
 // @access   Public
