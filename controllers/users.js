@@ -125,3 +125,29 @@ exports.putUser = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc     Login user
+// @route    POST /user/login
+// @access   Public
+
+exports.login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  req._oracledb.execute(
+    "SELECT * FROM USERS_TB WHERE email = :email",
+    [email],
+    function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        console.log(rows.rows.length)
+        if(rows.rows.length > 0) {
+          res.status(200).json({ success: true, rows });
+        } else {
+          res.status(400).json({ success: false });
+        }
+      } else {
+        console.log("Error while performing Query.");
+      }
+    }
+  );
+};
