@@ -76,25 +76,45 @@ exports.postUser = async (req, res, next) => {
   try {
     let User = getUserFromRec(req);
 
-    const createSql = `INSERT INTO USERS_TB VALUES ( 
-      :USER_ID, 
-      :USER_TYPE, 
-      :USERNAME, 
-      :FIRST_NAME, 
-      :SURNAME, 
-      :EMAIL, 
-      :ADDRESS, 
-      :PHONE_NUMBER, 
-      :EXPENSE_CODE)`;
+    // Get all from user table by email
+    const emailResult = User.EMAIL;
 
-    const result = await req._oracledb.execute(createSql, User, {
-      autoCommit: true
-    });
-    res.status(201).json(result);
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
+    req._oracledb.execute(
+      "SELECT * FROM USERS_TB WHERE EMAIL = :emailResult",
+      [emailResult],
+      async function(err, rows) {
+        if (!err) {
+          if(rows.rows.length == 0) {
+            try {
+              const createSql = `INSERT INTO USERS_TB VALUES ( 
+                :USER_ID, 
+                :USER_TYPE, 
+                :USERNAME, 
+                :FIRST_NAME, 
+                :SURNAME, 
+                :EMAIL, 
+                :ADDRESS, 
+                :PHONE_NUMBER, 
+                :EXPENSE_CODE)`;
+          
+              const result = await req._oracledb.execute(createSql, User, {
+                autoCommit: true
+              });
+              res.status(201).json(result);
+            } catch (error) {
+              console.log(error);
+              next(error);
+            }
+          }
+        } else {
+          console.log("Error while performing Query.");
+        }
+      }
+    );
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
 };
 
 // @desc     Update a user
@@ -139,14 +159,15 @@ exports.login = async (req, res, next) => {
     function(err, rows) {
       req._oracledb.close();
       if (!err) {
-        console.log(rows.rows.length)
         if(rows.rows.length > 0) {
+          console.log("Valid Credentials")
           res.status(200).json({ success: true, rows });
         } else {
+          console.log("Invalid Credentials")
           res.status(400).json({ success: false });
         }
       } else {
-        console.log("Error while performing Query.");
+        console.log("Error while performing Login Query.");
       }
     }
   );

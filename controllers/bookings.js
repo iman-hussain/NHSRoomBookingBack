@@ -37,16 +37,18 @@ exports.getBooking = async (req, res, next) => {
 // @access   Public
 exports.getUserBookings = async (req, res, next) => {
   var USER_ID = req.params.id;
-
+  console.log(USER_ID);
+  console.log(req.params);
   req._oracledb.execute(
     "SELECT * FROM BOOKINGS_TB WHERE USER_ID = :USER_ID",
     [USER_ID],
     function(err, rows) {
       req._oracledb.close();
       if (!err) {
+        console.log(rows)
         res.status(200).json({ success: true, rows });
       } else {
-        console.log("Error while performing Query.");
+        console.log("Error while performing Query on UserBookings.");
       }
     }
   );
