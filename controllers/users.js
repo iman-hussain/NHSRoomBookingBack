@@ -154,7 +154,7 @@ exports.login = async (req, res, next) => {
   const { email, password } = req.body;
 
   req._oracledb.execute(
-    "SELECT * FROM USERS_TB WHERE email = :email",
+    "SELECT * FROM USERS_TB WHERE email = :email OR username = :email",
     [email],
     function(err, rows) {
       req._oracledb.close();
