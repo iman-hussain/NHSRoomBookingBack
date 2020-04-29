@@ -57,6 +57,7 @@ function getUserFromRec(req) {
   const User = {
     USER_ID: req.body.USER_ID,
     USER_TYPE: req.body.USER_TYPE,
+    PASSWORD: req.body.PASSWORD,
     USERNAME: req.body.USERNAME,
     FIRST_NAME: req.body.FIRST_NAME,
     SURNAME: req.body.SURNAME,
@@ -69,13 +70,31 @@ function getUserFromRec(req) {
   return User;
 }
 
+function createUserFromRec(req) {
+  const User = {
+    USER_ID: null,
+    USER_TYPE: req.body.USER_TYPE,
+    PASSWORD: req.body.PASSWORD,
+    USERNAME: req.body.USERNAME,
+    FIRST_NAME: req.body.FIRST_NAME,
+    SURNAME: req.body.SURNAME,
+    EMAIL: req.body.EMAIL,
+    ADDRESS: req.body.ADDRESS,
+    PHONE_NUMBER: req.body.PHONE_NUMBER,
+    EXPENSE_CODE: req.body.EXPENSE_CODE
+  };
+
+  return User;
+}
+
+
 // @desc     Create a user
 // @route    POST /User
 // @access   Private
 exports.postUser = async (req, res, next) => {
   try {
-    let User = getUserFromRec(req);
-
+    let User = createUserFromRec(req);
+    console.log(User)
     // Get all from user table by email
     const emailResult = User.EMAIL;
 
@@ -87,9 +106,10 @@ exports.postUser = async (req, res, next) => {
           if(rows.rows.length == 0) {
             try {
               const createSql = `INSERT INTO USERS_TB VALUES ( 
-                :USER_ID, 
+                :USER_ID,
                 :USER_TYPE, 
                 :USERNAME, 
+                :PASSWORD,
                 :FIRST_NAME, 
                 :SURNAME, 
                 :EMAIL, 
@@ -128,6 +148,7 @@ exports.putUser = async (req, res, next) => {
       SET USER_TYPE = :USER_TYPE,
       USER_TYPE = :USER_TYPE,
       USERNAME = :USERNAME,
+      PASSWORD = :PASSWORD,
       FIRST_NAME = :FIRST_NAME,
       SURNAME = :SURNAME,
       EMAIL = :EMAIL,
@@ -152,10 +173,11 @@ exports.putUser = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
-
+  console.log(email);
+  console.log(password);
   req._oracledb.execute(
-    "SELECT * FROM USERS_TB WHERE email = :email OR username = :email",
-    [email],
+    "SELECT * FROM USERS_TB WHERE (username = :email AND password = :password) OR  (email = :email AND password = :password)",
+    [email, password],
     function(err, rows) {
       req._oracledb.close();
       if (!err) {
