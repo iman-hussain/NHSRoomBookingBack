@@ -108,8 +108,8 @@ exports.postUser = async (req, res, next) => {
               const createSql = `INSERT INTO USERS_TB VALUES ( 
                 :USER_ID,
                 :USER_TYPE, 
-                :USERNAME, 
                 :PASSWORD,
+                :USERNAME, 
                 :FIRST_NAME, 
                 :SURNAME, 
                 :EMAIL, 
