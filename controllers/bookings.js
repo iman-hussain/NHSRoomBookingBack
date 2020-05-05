@@ -78,10 +78,12 @@ exports.deleteBooking = async (req, res, next) => {
 
 function getBookingFromRec(req) {
   const booking = {
-    BOOKING_ID: req.body.BOOKING_ID,
+    BOOKING_ID: null,
     BOOKING_DATE: req.body.BOOKING_DATE,
     BOOKING_TIME: req.body.BOOKING_TIME,
+    DURATION: req.body.DURATION,
     GUESTS: req.body.GUESTS,
+    COLOUR: req.body.COLOUR,
     USER_ID: req.body.USER_ID,
     ROOM_ID: req.body.ROOM_ID,
     REVIEW_ID: null
@@ -101,7 +103,9 @@ exports.postBooking = async (req, res, next) => {
         :BOOKING_ID, 
         :BOOKING_DATE, 
         :BOOKING_TIME,
+        :DURATION,
         :GUESTS, 
+        :COLOUR,
         :USER_ID, 
         :ROOM_ID, 
         :REVIEW_ID)`;
