@@ -145,3 +145,29 @@ exports.putBooking = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc     Get a bookingInfo
+// @route    GET /bookings/info/:id
+// @access   Public
+exports.getBookingInfo = async (req, res, next) => {
+  var BOOKING_ID = req.params.id;
+
+  req._oracledb.execute(
+    `SELECT BUILDING_NAME, B_LAT, B_LONG, FLOOR, CAPACITY, PARKING, CATERING, ACCESSIBILITY, TOILET_ID
+    FROM BOOKINGS_TB,
+         ROOM_TB,
+         BUILDING_TB
+    WHERE ROOM_TB.BUILDING_ID = BUILDING_TB.BUILDING_ID
+    AND ROOM_TB.ROOM_ID = BOOKINGS_TB.ROOM_ID
+    AND BOOKINGS_TB.BOOKING_ID = :BOOKING_ID`,
+    [BOOKING_ID],
+    function(err, rows) {
+      req._oracledb.close();
+      if (!err) {
+        res.status(200).json({ success: true, rows });
+      } else {
+        console.log("Error while performing Query.");
+      }
+    }
+  );
+};
