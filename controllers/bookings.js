@@ -130,7 +130,9 @@ exports.putBooking = async (req, res, next) => {
     const updateSql = `UPDATE BOOKINGS_TB
       SET BOOKING_DATE = :BOOKING_DATE, 
       BOOKING_TIME = :BOOKING_TIME, 
+      DURATION = :DURATION,
       GUESTS = :GUESTS, 
+      COLOUR = :COLOUR,
       USER_ID = :USER_ID, 
       ROOM_ID = :ROOM_ID, 
       REVIEW_ID = :REVIEW_ID
