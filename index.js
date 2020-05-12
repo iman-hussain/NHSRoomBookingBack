@@ -1,3 +1,8 @@
+/*
+  Developed by Liam Penn - 1415065
+  Initialize the server with the required libraries, connect to the database and enable routes to be called
+*/
+
 // Install express server
 const express = require('express');
 const dotenv = require('dotenv');
@@ -13,6 +18,7 @@ const app = express();
 // Body parser
 app.use(express.json());
 
+// Enable cors
 const cors = require('cors');
 app.use(cors());
 

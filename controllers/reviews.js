@@ -1,3 +1,8 @@
+/*
+  Developed by Liam Penn - 1415065
+  Controls the get, put, post and delete request to the reviews table
+*/
+
 // @desc     Get all reviews
 // @route    GET /reviews
 // @access   Public

@@ -1,3 +1,8 @@
+/*
+  Developed by Liam Penn - 1415065
+  Controls the get, put, post and delete request to the bookings table
+*/
+
 // @desc     Get all bookings
 // @route    GET /bookings
 // @access   Public

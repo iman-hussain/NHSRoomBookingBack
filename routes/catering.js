@@ -1,3 +1,8 @@
+/*
+  Developed by Liam Penn - 1415065
+  Set routes to handle the catering controller methods
+*/
+
 const express = require('express');
 
 // The methods we want from the catering controller

@@ -1,3 +1,8 @@
+/*
+  Developed by Liam Penn - 1415065
+  Controls the get, put, post and delete request to the catering table
+*/
+
 // @desc     Get all catering
 // @route    GET /caterings
 // @access   Public

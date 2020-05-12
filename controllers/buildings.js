@@ -1,3 +1,8 @@
+/*
+  Developed by Liam Penn - 1415065
+  Controls the get, put, post and delete request to the buildings table
+*/
+
 // @desc     Get all buildinga
 // @route    GET /buildings
 // @access   Public

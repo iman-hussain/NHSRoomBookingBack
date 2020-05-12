@@ -1,3 +1,8 @@
+/*
+  Developed by Liam Penn - 1415065
+  Controls the get, put, post and delete request to the toilets table
+*/
+
 // @desc     Get all toilets
 // @route    GET /toilets
 // @access   Public
