@@ -1,0 +1,22 @@
+Make Tables: 
+START Make_Tables.sql
+
+Generate Tables:
+START Fill_Tables.sql
+
+Genereate Results:
+START Results.sql
+
+
+Login for oracle.
+
+Goes above the 1521 
+ora-srv.wlv.ac.uk
+
+Goes in last box
+
+OPS$1933527/P95721@ora-srv.wlv.ac.uk:1521/catdb.wlv.ac.uk
+
+OPS$1933527/P95721@ora-srv.wlv.ac.uk:1521/catdb.wlv.ac.uk
+
+

@@ -1,0 +1,8 @@
+I have tried to re make the ERD but i keep screwing it up 
+- what i wanted to change is in building and room we have catering as a foreign key so what do you suggest
+Don't worry about it, not all building/room will have a catering_id. 
+
+- the toilet sitution i have noted yes as 1 no as 2 but im not sure how to show both male and female its quite confusing -
+Both = 0
+Male = 1
+Female = 2

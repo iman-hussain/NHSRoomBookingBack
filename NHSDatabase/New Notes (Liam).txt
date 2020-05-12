@@ -1,0 +1,18 @@
+Changes: 
+
+Toilet Table insert format date like - 03-MAR-2020 instead of 03/03/2020
+Catering tables - Keep everything on one line, oracle isn't good enough to understand
+Users_TB - Password field needed.
+Changed booking duration to number as a quick fix, change this back to timestamp and match bookings_start format
+
+
+I have tried to re make the ERD but i keep screwing it up 
+- what i wanted to change is in building and room we have catering as a foreign key so what do you suggest
+
+Don't worry about it, not all building/room will have a catering_id. 
+
+- the toilet sitution i have noted yes as 1 no as 2 but im not sure how to show both male and female its quite confusing -
+
+Both = 0
+Male = 1
+Female = 2

@@ -1,0 +1,14 @@
+DELETE FROM Bookings_tb;
+DELETE FROM Reviews_tb;
+DELETE FROM Users_tb;
+DELETE FROM Building_tb;
+DELETE FROM Room_tb;
+DELETE FROM Catering_tb;
+DELETE FROM Toilet_tb;
+START U:/NHSDatabase/TableInfo/Insert_Toilet;
+START U:/NHSDatabase/TableInfo/Insert_Catering;
+START U:/NHSDatabase/TableInfo/Insert_Building;
+START U:/NHSDatabase/TableInfo/Insert_Room;
+START U:/NHSDatabase/TableInfo/Insert_Users;
+START U:/NHSDatabase/TableInfo/Insert_Review;
+START U:/NHSDatabase/TableInfo/Insert_Booking;

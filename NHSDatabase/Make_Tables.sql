@@ -1,0 +1,14 @@
+DROP Table Bookings_tb;
+DROP Table Reviews_tb;
+DROP Table Users_tb;
+DROP Table Room_tb;
+DROP Table Building_tb;
+DROP Table Toilet_tb;
+DROP Table Catering_tb;
+START U:/NHSDatabase/Table/Toilet_tb;
+START U:/NHSDatabase/Table/Catering_tb;
+START U:/NHSDatabase/Table/Users_tb;
+START U:/NHSDatabase/Table/Review_tb;
+START U:/NHSDatabase/Table/Building_tb;
+START U:/NHSDatabase/Table/Room_tb;
+START U:/NHSDatabase/Table/Booking_tb;
